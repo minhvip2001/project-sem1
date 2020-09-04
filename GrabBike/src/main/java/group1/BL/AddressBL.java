@@ -9,7 +9,6 @@ public class AddressBL {
     AddressDAL driDal = new AddressDAL();
     public Address getAddress(int id) throws SQLException {
         Address address = driDal.getAddress(id);
-        
         return address;
     }
 }
