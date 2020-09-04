@@ -1,13 +1,14 @@
 package group1;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+
+import java.sql.SQLException;
+import group1.PL_Console.Menu;
+
+public class App {
+    
+    public static void main(String[] args) throws SQLException {
+        Menu menu = new Menu();
+         menu.menu();    
     }
+
 }
