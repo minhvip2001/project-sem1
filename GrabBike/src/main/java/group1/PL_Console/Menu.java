@@ -17,20 +17,18 @@ import group1.BL.BookingBL;
 import group1.BL.CustomerBL;
 import group1.BL.DriverBL;
 import group1.BL.PaymentBL;
-import group1.BL.RatingBL;
+
 import group1.Persistence.Address;
 import group1.Persistence.Booking;
 import group1.Persistence.Customer;
 import group1.Persistence.Driver;
 import group1.Persistence.Payment;
-import group1.Persistence.Rating;
 
 public class Menu {
     BookingBL bookingBL = new BookingBL();
     DriverBL driverBL = new DriverBL();
     Booking boo = new Booking();
-    Rating rate = new Rating();
-    RatingBL rateBL = new RatingBL();
+
     AddressBL addressBL = new AddressBL();
     CustomerBL cusBL = new CustomerBL();
     Scanner sc = new Scanner(System.in);
@@ -296,6 +294,7 @@ public class Menu {
 
     public void booking() throws SQLException {
         util.clrscr();
+        Customer cus = cusBL.getCustomer();
         line(65, "-");
         System.out.printf("| %-61s |\n", "Find driver");
         line(65, "-");
@@ -312,6 +311,7 @@ public class Menu {
         boo.setStart(start);
         boo.setEnd(end);
         boo.setPrice(price);
+        boo.setCustomerID(cus.getID());
         int choice = util.Choose(" [1. Booking] - [2. Back]: ");
         switch (choice) {
             case 1:
@@ -381,6 +381,7 @@ public class Menu {
                         "0" + formatPhone.format(Long.valueOf(driver.getPhone())), boo.getStart(), boo.getEnd(),
                         driver.getLicensePlates(), driver.getVehicleInfo(), driver.getLocation());
                 line(156, "-");
+
                 String choose = util.onlyYN(" [Y. Keep trip][N. Cancel trip]: ");
                 if (choose.equals("N")) {
                     main();
@@ -418,15 +419,15 @@ public class Menu {
                                 if (count == 1) {
                                     System.out.print(" Only Enter[1-5]: ");
                                 }
-                                int rateStar = Integer.parseInt(sc.nextLine());
-                                if (rateStar != 1 && rateStar != 2 && rateStar != 3 && rateStar != 4 && rateStar != 5) {
+                                String rateStar = sc.nextLine();
+                                if (!rateStar.equals("1") && !rateStar.equals("2") && !rateStar.equals("3") && !rateStar.equals("4") && !rateStar.equals("5")) {
                                     count = 1;
                                     continue;
                                 } else {
-                                    RatingBL rateBL = new RatingBL();
-                                    Rating rate = new Rating();
-                                    rate.setStarRating(rateStar);
-                                    rate = rateBL.ratingDriver(cus.getID(), driver.getID(), rate.getStarRating());
+                                    boo = bookingBL.viewJourney();
+                                    boo.setBookingID(boo.getBookingID());
+                                    boo.setRating(Integer.parseInt(rateStar));
+                                    boo = bookingBL.insertRating(boo);
                                     while (true) {
                                         String pick = util.onlyYN(" [Y]. Continue to book - [N]. Exit: ");
                                         switch (pick) {
@@ -525,7 +526,7 @@ public class Menu {
             }
             for (int j = from; j < bookings.size(); j++) {
                 if (j < to) {
-                    Driver driver = driverBL.getDriverId(bookings.get(j).getDriverID());
+                    Driver driver = driverBL.getDriverDetail(bookings.get(j).getDriverID(), cus.getID() );
                     System.out.printf("| %-2d | %-20s | %-12s | %-20s | %-20s | %-10s | %-25s |\n", j + 1,
                             driver.getName(), "0" + formatPhone.format(Long.valueOf(driver.getPhone())),
                             bookings.get(j).getStart(), bookings.get(j).getEnd(),

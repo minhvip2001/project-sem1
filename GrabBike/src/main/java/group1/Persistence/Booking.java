@@ -3,36 +3,41 @@ package group1.Persistence;
 import java.sql.Timestamp;
 
 public class Booking {
-    int journeyID;
+    int bookingID;
     int driverID;
+    int customerID;
     String start;
     String end;
     Timestamp date;
     float price;
+    int rating;
 
-    public Booking() {
+    public int getBookingID() {
+        return this.bookingID;
     }
 
-    public Booking(int bookingID, int driverID, String start, String end, Timestamp date, int price) {
-        this.journeyID = bookingID;
-        this.driverID = driverID;
-        this.start = start;
-        this.end = end;
-        this.date = date;
-        this.price = price;
+    public void setBookingID(int bookingID) {
+        this.bookingID = bookingID;
     }
-
 
     public int getDriverID() {
-        return driverID;
+        return this.driverID;
     }
 
     public void setDriverID(int driverID) {
         this.driverID = driverID;
     }
 
+    public int getCustomerID() {
+        return this.customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+
     public String getStart() {
-        return start;
+        return this.start;
     }
 
     public void setStart(String start) {
@@ -40,7 +45,7 @@ public class Booking {
     }
 
     public String getEnd() {
-        return end;
+        return this.end;
     }
 
     public void setEnd(String end) {
@@ -48,7 +53,7 @@ public class Booking {
     }
 
     public Timestamp getDate() {
-        return date;
+        return this.date;
     }
 
     public void setDate(Timestamp date) {
@@ -56,19 +61,19 @@ public class Booking {
     }
 
     public float getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(float price) {
         this.price = price;
     }
 
-    public int getJourneyID() {
-        return journeyID;
+    public int getRating() {
+        return this.rating;
     }
 
-    public void setJourneyID(int journeyID) {
-        this.journeyID = journeyID;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
 }

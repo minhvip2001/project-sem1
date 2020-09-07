@@ -37,5 +37,8 @@ public class DriverBL {
     public Driver updateLocation(Booking boo, int id) throws SQLException{
         return driDal.updateLocation(boo, id);
     }
+    public Driver getDriverDetail(int id, int cusID) throws SQLException {
+        return dri = driDal.getDriverDetail(id, cusID);
+    }
 
 }

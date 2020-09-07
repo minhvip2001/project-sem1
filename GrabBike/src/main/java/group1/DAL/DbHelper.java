@@ -12,7 +12,7 @@ public class DbHelper {
     // Tạo kết nối đến database
     public static Connection getConnection() throws SQLException{
         if(conn == null){
-            String connectionString = "jdbc:mysql://localhost:3306/GrabSystem";
+            String connectionString = "jdbc:mysql://localhost:3306/Data";
             conn = DriverManager.getConnection(connectionString, "root", "minh2001");
         }
         return conn;

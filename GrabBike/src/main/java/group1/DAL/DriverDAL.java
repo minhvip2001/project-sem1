@@ -60,7 +60,7 @@ public class DriverDAL {
    
     public ArrayList<Driver> getListDriver(String location) throws SQLException {
 
-        query = "SELECT * FROM drivers WHERE location like '%" + location  + "%' And status = 0 LIMIT 10;";
+        query = "SELECT * FROM drivers WHERE location like '%" + location  + "%' And status = 0 ;";
 
         //Mở kết nối đến database
         DbHelper.getConnection();
@@ -89,8 +89,8 @@ public class DriverDAL {
         dri.setName(rs.getString("driver_name"));
         dri.setEmail(rs.getString("email"));
         dri.setPhone(rs.getString("phone"));
-        dri.setLicensePlates(rs.getString("license_plates"));
-        dri.setVehicleInfo(rs.getString("VehicleInfo"));
+        dri.setLicensePlates(rs.getString("licensePlates"));
+        dri.setVehicleInfo(rs.getString("vehicleInfo"));
         dri.setLocation(rs.getString("location"));
         dri.setStatus(rs.getInt("status"));
         return dri;
@@ -127,6 +127,29 @@ public class DriverDAL {
 
         //Lấy thông tin Employee từ ResultSet
         Driver dri = null;  
+
+        //Đóng kết nối
+        DbHelper.closeConnection();
+
+        return dri;
+
+    }
+    public Driver getDriverDetail(int id, int cusID) throws SQLException {
+
+        query = "Select * from Drivers d inner join Bookings r on d.driver_id = " + id + " where r.customer_id = " + cusID + ";";
+
+
+        //Mở kết nối đến database
+        DbHelper.getConnection();
+
+        //Thực hiện truy vấn
+        rs = DbHelper.executeQuery(query);
+
+        //Lấy thông tin Employee từ ResultSet
+        Driver dri = null;
+        while (rs.next()) {
+            dri = getDriverInfo(rs);
+        }
 
         //Đóng kết nối
         DbHelper.closeConnection();
